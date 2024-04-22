@@ -1,6 +1,6 @@
 ﻿namespace StreebogCollisionExplorer.Streebog
 {
-    internal partial class StreebogAlgorithm
+    public partial class StreebogAlgorithm
     {
         //Не знаю насколько правильно выносить константы в частичном классе,
         //но идея показалось интересной, решил попробовать

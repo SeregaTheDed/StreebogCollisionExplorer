@@ -1,6 +1,6 @@
 ﻿namespace StreebogCollisionExplorer.Streebog
 {
-    internal partial class StreebogAlgorithm
+    public partial class StreebogAlgorithm
     {
         private void XOR(ref byte[] blockA, byte[] blockB)
         {
@@ -73,7 +73,7 @@
             XOR(ref inputBlock, key);
         }
 
-        private void G(ref byte[] hash, ref byte[] inputBlock, byte[] n)
+        private void TransformG(ref byte[] hash, ref byte[] inputBlock, byte[] n)
         {
             byte[] copyOfH = (byte[])hash.Clone();
             XOR(ref hash, inputBlock);
@@ -84,12 +84,12 @@
 
         private void TransformG(ref byte[] hash, ref byte[] inputBlock)
         {
-            byte[] copyOfH = (byte[])hash.Clone();
+            byte[] hashCopy = (byte[])hash.Clone();
             XOR(ref hash, inputBlock);
-            TransformS(ref copyOfH);
-            TransformP(ref copyOfH);
-            TransformL(ref copyOfH);
-            TransformE(ref inputBlock, ref copyOfH);
+            TransformS(ref hashCopy);
+            TransformP(ref hashCopy);
+            TransformL(ref hashCopy);
+            TransformE(ref inputBlock, ref hashCopy);
             XOR(ref hash, inputBlock);
         }
 
@@ -116,6 +116,7 @@
             TransformP(ref inputBlock);
             TransformL(ref inputBlock);
         }
+
 
     }
 }

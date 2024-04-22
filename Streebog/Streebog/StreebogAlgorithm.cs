@@ -1,8 +1,7 @@
 ﻿namespace StreebogCollisionExplorer.Streebog
 {
-    internal partial class StreebogAlgorithm
+    public partial class StreebogAlgorithm
     {
-        
         public byte[] GetHash(byte[] data)
         {
             var hash = new byte[blockSize];
@@ -18,10 +17,15 @@
             return hash;
         }
 
+        public byte[] GetHash(byte[] data, int length)
+        {
+            return GetHash(data)[..length];
+        }
+
         private void GenerateHash(ref byte[] hash, ref byte[] cnt, ref byte[] sigma, int index, ref byte[] tempBlock)
         {
             ExtendArraysByte(ref sigma, tempBlock);
-            G(ref hash, ref tempBlock, cnt);
+            TransformG(ref hash, ref tempBlock, cnt);
             int lengthRemainsInBit = index * minBloсkSize;
             byte[] temp = { 
                 (byte) ((lengthRemainsInBit & 0b100000000) >> minBloсkSize), 
@@ -39,7 +43,7 @@
             {
                 byte[] tempBlock = data[(index - blockSize)..index];
                 ExtendArraysByte(ref sigma, tempBlock);
-                G(ref hash, ref tempBlock, cnt);
+                TransformG(ref hash, ref tempBlock, cnt);
                 ExtendArraysByte(ref cnt, new byte[] { 2, 0 });
             }
         }

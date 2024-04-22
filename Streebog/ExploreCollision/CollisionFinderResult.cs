@@ -1,6 +1,6 @@
 ﻿namespace StreebogCollisionExplorer.ExploreCollision
 {
-    internal class CollisionFinderResult
+    public class CollisionFinderResult
     {
         public CollisionFinderResult(int attemptsCount, long millisecondsTotal, 
             IEnumerable<byte[]> messages, byte[] hash)
