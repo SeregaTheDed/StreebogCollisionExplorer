@@ -10,15 +10,15 @@ namespace StreebogCollisionExplorer.ExploreCollision
             int attemptsCount = 1;
             byte[] message = new byte[messageLength];
             random.NextBytes(message);
-            byte[] lastHashOne = message;
+            byte[] lastHashA = message;
             byte[] lastHashB = message;
 
             byte[] hashA = streebogAlgorithm.GetHash(message);
             byte[] hashB = streebogAlgorithm.GetHash(hashA);
 
-            while (!hashA[..hashSize].SequenceEqual(hashB[..hashSize]))
+            while (!hashA.Take(hashSize).SequenceEqual(hashB.Take(hashSize)))
             {
-                lastHashOne = hashA;
+                lastHashA = hashA;
                 hashA = streebogAlgorithm.GetHash(hashA);
                 hashB = streebogAlgorithm.GetHash(hashB);
                 lastHashB = hashB;
@@ -29,8 +29,8 @@ namespace StreebogCollisionExplorer.ExploreCollision
             return new CollisionFinderResult(
                 attemptsCount,
                 (DateTime.Now - startFindingDateTime).Milliseconds,
-                new List<byte[]> { lastHashOne, lastHashB },
-                hashB
+                new List<byte[]> { lastHashA, lastHashB },
+                hashB[..hashSize]
             );
         }
 
