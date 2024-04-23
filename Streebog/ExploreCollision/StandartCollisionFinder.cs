@@ -23,7 +23,7 @@ namespace StreebogCollisionExplorer.ExploreCollision
 
             return new CollisionFinderResult(
                 hashDictionary.Count,
-                (DateTime.Now - startFindingDateTime).Milliseconds,
+                (long) (DateTime.Now - startFindingDateTime).TotalMilliseconds,
                 new List<byte[]> { randomMsg, hashDictionary[Convert.ToHexString(hash)] },
                 hash
             );

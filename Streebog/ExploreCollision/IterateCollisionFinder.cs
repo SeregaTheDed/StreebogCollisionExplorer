@@ -28,7 +28,7 @@ namespace StreebogCollisionExplorer.ExploreCollision
 
             return new CollisionFinderResult(
                 attemptsCount,
-                (DateTime.Now - startFindingDateTime).Milliseconds,
+                (long) (DateTime.Now - startFindingDateTime).TotalMilliseconds,
                 new List<byte[]> { lastHashA, lastHashB },
                 hashB[..hashSize]
             );

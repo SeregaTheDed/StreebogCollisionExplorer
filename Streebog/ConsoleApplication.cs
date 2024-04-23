@@ -9,46 +9,54 @@ namespace StreebogCollisionExplorer
     {
         private const string SkipLine = "-----------------------------------------------------------------------------------------------------------";
 
-        public void printChartTESTTTTT()
+        public void printChart()
         {
-            //populate dataset with some demo data..
-            DataSet dataSet = new DataSet();
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Name", typeof(string));
-            dt.Columns.Add("Counter", typeof(int));
-            DataRow r1 = dt.NewRow();
-            r1[0] = "Demo";
-            r1[1] = 8;
-            dt.Rows.Add(r1);
-            DataRow r2 = dt.NewRow();
-            r2[0] = "Second";
-            r2[1] = 15;
-            dt.Rows.Add(r2);
-            dataSet.Tables.Add(dt);
-
+            Console.WriteLine("Вычисление может занять долгое время! До 10 минут!");
+            Console.WriteLine("Создается график...");
 
             //prepare chart control...
             Chart chart = new Chart();
-            chart.DataSource = dataSet.Tables[0];
-            chart.Width = 600;
-            chart.Height = 350;
+            chart.Width = 1920;
+            chart.Height = 1080;
             //create serie...
+            Console.WriteLine("Вычисляем для стандартного точки [1, 4]");
+            int iters = 3;
             Series serie1 = new Series();
-            serie1.Name = "Serie1";
-            serie1.Color = Color.FromArgb(112, 255, 200);
-            serie1.BorderColor = Color.FromArgb(164, 164, 164);
-            serie1.ChartType = SeriesChartType.Column;
-            serie1.BorderDashStyle = ChartDashStyle.Solid;
-            serie1.BorderWidth = 1;
-            serie1.ShadowColor = Color.FromArgb(128, 128, 128);
-            serie1.ShadowOffset = 1;
-            serie1.IsValueShownAsLabel = true;
-            serie1.XValueMember = "Name";
-            serie1.YValueMembers = "Counter";
-            serie1.Font = new Font("Tahoma", 8.0f);
-            serie1.BackSecondaryColor = Color.FromArgb(0, 102, 153);
-            serie1.LabelForeColor = Color.FromArgb(100, 100, 100);
+            for (int i = 1; i < 5; i++)
+            {
+                long totalTime = 0;
+                for (int j = 0; j < iters; j++)
+                {
+                    CollisionFinderResult collisionFinderResult = new StandartCollisionFinder().FindCollisions(i);
+                    totalTime += collisionFinderResult.MillisecondsTotal;
+                    Console.WriteLine($"p{i}.y = {collisionFinderResult.MillisecondsTotal} (попытка {j + 1})");
+                }
+                Console.WriteLine($"p{i}.y = {totalTime / iters} (сред)");
+                serie1.Points.AddXY(i, totalTime / iters);
+            }
             chart.Series.Add(serie1);
+
+
+            Console.WriteLine("Вычисляем для итеративного точки [1, 2]");
+            Series serie2 = new Series();
+            for (int i = 1; i < 3; i++)
+            {
+                long totalTime = 0;
+                for (int j = 0; j < iters; j++)
+                {
+                    CollisionFinderResult collisionFinderResult = new IterateCollisionFinder().FindCollisions(i);
+                    totalTime += collisionFinderResult.MillisecondsTotal;
+                    Console.WriteLine($"p{i}.y = {collisionFinderResult.MillisecondsTotal} (попытка {j + 1})");
+                }
+                Console.WriteLine($"p{i}.y = {totalTime / iters} (сред)");
+                serie2.Points.AddXY(i, totalTime / iters);
+            }
+            chart.Series.Add(serie2);
+
+
+
+            Console.WriteLine("Рисуем, биндим...");
+
             //create chartareas...
             ChartArea ca = new ChartArea();
             ca.Name = "ChartArea1";
@@ -59,20 +67,24 @@ namespace StreebogCollisionExplorer
             ca.AxisX = new Axis();
             ca.AxisY = new Axis();
             chart.ChartAreas.Add(ca);
+
             //databind...
             chart.DataBind();
+
             //save result...
+            string path = @".\myChart.png";
             chart.SaveImage(@".\myChart.png", ChartImageFormat.Png);
+            Console.WriteLine("График сохранен по пути: " + path);
         }
         public void Start()
         {
-            //printChartTESTTTTT();
             while (true)
             {
                 Console.WriteLine("Выберите пункт меню:");
                 Console.WriteLine("1. Построить коллизию используя базовый алгоритм");
                 Console.WriteLine("2. Построить коллизию используя итеративный алгоритм");
-                Console.WriteLine("3. Выход");
+                Console.WriteLine("3. Построить график");
+                Console.WriteLine("4. Выход");
 
                 Console.Write("Значение: ");
                 switch (Console.ReadLine().Trim())
@@ -84,6 +96,9 @@ namespace StreebogCollisionExplorer
                         FindCollisions(new IterateCollisionFinder());
                         break;
                     case "3":
+                        printChart();
+                        break;
+                    case "4":
                         Environment.Exit(0);
                         break;
                     default:
@@ -106,7 +121,7 @@ namespace StreebogCollisionExplorer
             Console.WriteLine("Ограничение на ввод не стоит, но если вводить большие значения: \n" +
                 ">4 для стандратного и >2 для итеративного, то будет работать ОЧЕНЬ долго");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("Введите размер хэша: ");
+            Console.Write("Введите размер хэша(в байтах): ");
             int hashSize = int.Parse(Console.ReadLine());
 
             CollisionFinderResult collisionFinderResult = collisionFinder.FindCollisions(hashSize);
