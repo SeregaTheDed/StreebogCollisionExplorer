@@ -16,7 +16,7 @@ namespace StreebogCollisionExplorer.ExploreCollision
             Dictionary<string, byte[]> hashDictionary = new();
             do
             {
-                hashDictionary.Add(Convert.ToHexString(hash), randomMsg);
+                hashDictionary.Add(Convert.ToHexString(hash), (byte[]) randomMsg.Clone());
                 random.NextBytes(randomMsg);
                 hash = streebogAlgorithm.GetHash(randomMsg, hashSize);
             } while (!hashDictionary.ContainsKey(Convert.ToHexString(hash)));
