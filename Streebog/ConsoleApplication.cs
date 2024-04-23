@@ -1,8 +1,9 @@
-﻿using System.Data;
+﻿using StreebogCollisionExplorer.ExploreCollision;
+using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace Streebog
+namespace StreebogCollisionExplorer
 {
     internal class ConsoleApplication
     {
@@ -65,20 +66,22 @@ namespace Streebog
         }
         public void Start()
         {
-            printChartTESTTTTT();
+            //printChartTESTTTTT();
             while (true)
             {
                 Console.WriteLine("Выберите пункт меню:");
-                Console.WriteLine("1 - Построить коллизию используя базовый алгоритм");
-                Console.WriteLine("2 - Построить коллизию используя итеративный алгоритм");
-                Console.WriteLine("3 - Выход");
+                Console.WriteLine("1. Построить коллизию используя базовый алгоритм");
+                Console.WriteLine("2. Построить коллизию используя итеративный алгоритм");
+                Console.WriteLine("3. Выход");
 
                 Console.Write("Значение: ");
                 switch (Console.ReadLine().Trim())
                 {
                     case "1":
+                        FindCollisions(new StandartCollisionFinder());
                         break;
                     case "2":
+                        FindCollisions(new IterateCollisionFinder());
                         break;
                     case "3":
                         Environment.Exit(0);
@@ -88,8 +91,35 @@ namespace Streebog
                         break;
 
                 }
-                Console.WriteLine(SkipLine);
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine(SkipLine);
+                }
             }
+        }
+
+
+
+        private static void FindCollisions(BaseCollisionFinder collisionFinder)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Ограничение на ввод не стоит, но если вводить большие значения: \n" +
+                ">4 для стандратного и >2 для итеративного, то будет работать ОЧЕНЬ долго");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Введите размер хэша: ");
+            int hashSize = int.Parse(Console.ReadLine());
+
+            CollisionFinderResult collisionFinderResult = collisionFinder.FindCollisions(hashSize);
+
+            Console.WriteLine("Время: " + collisionFinderResult.MillisecondsTotal + "ms");
+            Console.WriteLine("Попыток: " + collisionFinderResult.AttemptsCount);
+            foreach (var item in collisionFinderResult.MessagesStrings)
+            {
+                Console.WriteLine(SkipLine);
+                Console.WriteLine("Сообщение i: " + item);
+                Console.WriteLine("Хеш сообщения i: " + collisionFinderResult.HashString);
+            }
+
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Numerics;
 
-namespace Streebog
+namespace StreebogCollisionExplorer
 {
     internal class Program
     {
