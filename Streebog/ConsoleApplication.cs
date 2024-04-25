@@ -84,7 +84,8 @@ namespace StreebogCollisionExplorer
                 Console.WriteLine("1. Построить коллизию используя базовый алгоритм");
                 Console.WriteLine("2. Построить коллизию используя итеративный алгоритм");
                 Console.WriteLine("3. Построить график");
-                Console.WriteLine("4. Выход");
+                Console.WriteLine("4. Построение осмысленной коллизии");
+                Console.WriteLine("5. Выход");
 
                 Console.Write("Значение: ");
                 switch (Console.ReadLine().Trim())
@@ -99,6 +100,12 @@ namespace StreebogCollisionExplorer
                         printChart();
                         break;
                     case "4":
+                        ImageMeaningfulCollisionsExplorer.Explore(
+                            "./Images/CatsWithButterfly.png",
+                            "./Images/DogsWithButterfly.png"
+                        );
+                        break;
+                    case "5":
                         Environment.Exit(0);
                         break;
                     default:

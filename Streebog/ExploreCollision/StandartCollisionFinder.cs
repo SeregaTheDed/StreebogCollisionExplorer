@@ -7,6 +7,11 @@ namespace StreebogCollisionExplorer.ExploreCollision
     {
         public override CollisionFinderResult FindCollisions(int hashSize)
         {
+            return FindCollisions(hashSize, messageLength);
+        }
+
+        public CollisionFinderResult FindCollisions(int hashSize, int messageLength)
+        {
             DateTime startFindingDateTime = DateTime.Now;
             byte[] randomMsg = new byte[messageLength];
             random.NextBytes(randomMsg);
@@ -16,17 +21,18 @@ namespace StreebogCollisionExplorer.ExploreCollision
             Dictionary<string, byte[]> hashDictionary = new();
             do
             {
-                hashDictionary.Add(Convert.ToHexString(hash), (byte[]) randomMsg.Clone());
+                hashDictionary.Add(Convert.ToHexString(hash), (byte[])randomMsg.Clone());
                 random.NextBytes(randomMsg);
                 hash = streebogAlgorithm.GetHash(randomMsg, hashSize);
             } while (!hashDictionary.ContainsKey(Convert.ToHexString(hash)));
 
             return new CollisionFinderResult(
                 hashDictionary.Count,
-                (long) (DateTime.Now - startFindingDateTime).TotalMilliseconds,
+                (long)(DateTime.Now - startFindingDateTime).TotalMilliseconds,
                 new List<byte[]> { randomMsg, hashDictionary[Convert.ToHexString(hash)] },
                 hash
             );
         }
+
     }
 }

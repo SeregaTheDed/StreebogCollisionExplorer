@@ -17,3 +17,5 @@ C:\Users\user\Desktop\Streebog\Streebog\Streebog\obj\Debug\net7.0-windows\Streeb
 C:\Users\user\Desktop\Streebog\Streebog\Streebog\obj\Debug\net7.0-windows\StreebogCollisionExplorer.genruntimeconfig.cache
 C:\Users\user\Desktop\Streebog\Streebog\Streebog\obj\Debug\net7.0-windows\ref\StreebogCollisionExplorer.dll
 C:\Users\user\Desktop\Streebog\Streebog\Streebog\obj\Debug\net7.0-windows\StreebogCollisionExplorer.sourcelink.json
+C:\Users\user\Desktop\Streebog\Streebog\Streebog\bin\Debug\net7.0-windows\Images\CatsWithButterfly.png
+C:\Users\user\Desktop\Streebog\Streebog\Streebog\bin\Debug\net7.0-windows\Images\DogsWithButterfly.png
