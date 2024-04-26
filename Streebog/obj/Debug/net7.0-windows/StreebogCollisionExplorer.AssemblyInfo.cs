@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StreebogCollisionExplorer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d38afa1536faa6c15ae5fcb8a57a37b0e2342a20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c02a2b8db87850e780f37a5cc87c73868e291fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("StreebogCollisionExplorer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StreebogCollisionExplorer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

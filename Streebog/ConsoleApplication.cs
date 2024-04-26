@@ -101,8 +101,8 @@ namespace StreebogCollisionExplorer
                         break;
                     case "4":
                         ImageMeaningfulCollisionsExplorer.Explore(
-                            "./Images/CatsWithButterfly.png",
-                            "./Images/DogsWithButterfly.png"
+                            "./Images/Cat.png",
+                            "./Images/Dog.png"
                         );
                         break;
                     case "5":

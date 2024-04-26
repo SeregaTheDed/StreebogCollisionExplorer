@@ -9,15 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\CatsWithButterfly.png" />
-    <None Remove="Images\DogsWithButterfly.png" />
+    <None Remove="Images\Cat.png" />
+    <None Remove="Images\Dog.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Images\CatsWithButterfly.png">
+    <EmbeddedResource Include="Images\Cat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Images\DogsWithButterfly.png">
+    <EmbeddedResource Include="Images\Dog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
